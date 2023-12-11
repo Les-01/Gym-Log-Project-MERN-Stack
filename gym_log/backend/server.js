@@ -1,15 +1,11 @@
-// This is the server file
-
-// This requires 'express' then sets it as the value of the function 'express' creating an express application.
+// This line imports the 'express' module and assigns its functionality to the variable 'express', enabling the creation of Express applications.
 const express = require('express')
-
 // This requires 'mongoose' then sets it as the value of the variable 'mongoose'.
 const mongoose = require('mongoose')
+// This declares the variable 'mongoURI' and assigns the mongoDB connection string as it's value.
 const mongoURI = "mongodb+srv://Les2023:FullStackDev2023@gymlogapp.0discbh.mongodb.net/?retryWrites=true&w=majority"
-
-// This requires the file 'exercises' in the 'routes' folder effectivly importing it, then sets it as the value of the variable 'exerciseRoutes'.
+// This requires the file 'exercises' from the 'routes' folder importing it, then sets it as the value of the variable 'exerciseRoutes'.
 const exerciseRoutes = require('./routes/exercises')
-
 // This declares the const type variable 'app' and sets its value as the express application.
 const app = express()
 
@@ -25,18 +21,22 @@ app.use((req, res, next) => {
     next()
 })
 
-// Routes 
+// Route 
 app.use('/api/exercises', exerciseRoutes)
 
 // Database Connection
+// This connects to the MongoDB database using the value of the variable 'mongoURI'.
 mongoose.connect(mongoURI)
+    // If the database connection is successful.
     .then(() => {
+        // This starts the Express app to listen on port 9000.
         app.listen(9000, () => {
+            // Here 'console.log' is used to log the message "Database connection successful, listening on port 9000." indicating a successful database connection and server start.
             console.log("Database connection successful, listening on port 9000.")
         })
     })
+    // If an error occurs during database connection or server start.
     .catch((error) => {
+        // Here 'console.log' is used to log the error to the console for troubleshooting.
         console.log(error)
     })
-
-
