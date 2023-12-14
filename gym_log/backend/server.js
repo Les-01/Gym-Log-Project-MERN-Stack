@@ -2,12 +2,20 @@
 const express = require('express')
 // This requires 'mongoose' then sets it as the value of the variable 'mongoose'.
 const mongoose = require('mongoose')
+
+const cors = require('cors')
+
 // This declares the variable 'mongoURI' and assigns the mongoDB connection string as it's value.
 const mongoURI = "mongodb+srv://Les2023:FullStackDev2023@gymlogapp.0discbh.mongodb.net/?retryWrites=true&w=majority"
 // This requires the file 'exercises' from the 'routes' folder importing it, then sets it as the value of the variable 'exerciseRoutes'.
 const exerciseRoutes = require('./routes/exercises')
 // This declares the const type variable 'app' and sets its value as the express application.
 const app = express()
+
+app.use (cors({
+    origin: "*",
+    // credentials: true ---- This allows cookies
+}))
 
 // Middleware for Testing
 // Here 'express.json()' function is used which when data is sent to the server via POST, PUT, or PATCH request with a Content-Type of json, this middleware function takes the raw JSON data and 
