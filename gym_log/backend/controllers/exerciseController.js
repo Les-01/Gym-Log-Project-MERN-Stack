@@ -1,9 +1,11 @@
+// controller.js
+
 // This requires the file 'exerciseModel' from the 'models' folder importing it, then sets it as the value of the variable 'Exercise'.
 const Exercise = require('../models/exerciseModel')
 // This requires 'mongoose' then sets it as the value of the variable 'mongoose'.
 const mongoose = require('mongoose')
 
-// This is the 'getExercises' function.
+// This is the functional component 'getExercises'.
 const getExercises = async (req, res) => {
     // Here the 'Exercise.find' method is used to find all of the exercises. The '.sort' method and '-1' is used to sort the results in descending order from creation. 
     const exercises = await Exercise.find({}).sort({createdAt: -1})
@@ -11,7 +13,7 @@ const getExercises = async (req, res) => {
     res.status(200).json(exercises)
 }
 
-// // This is the 'getSingleExercise' function. 
+// This is the functional component 'getSingleExercise'.
 const getSingleExercise = async (req, res) => {
     // Here the variable 'id' is set to equal the value of the id of the request object.
     const {id} = req.params
@@ -31,7 +33,7 @@ const getSingleExercise = async (req, res) => {
     res.status(200).json(exercise)
 }
 
-// This is the 'createExercise' function.
+// This is the functional component 'createExercise'.
 const createExercise = async (req, res) => {
     // Here the variables 'exerciseName', 'reps', and 'weight' are set to equal the value of the exerciseName, reps and weight of the request object.
     const {exerciseName, reps, weight} = req.body
@@ -47,7 +49,7 @@ const createExercise = async (req, res) => {
     }
 }
 
-// // This is the 'deleteExercise' function.
+// This is the functional component 'deleteExercise'.
 const deleteExercise = async (req, res) => {
     // Here the variable 'id' is set to equal the value of the id of the request object.
     const {id} = req.params
@@ -67,7 +69,7 @@ const deleteExercise = async (req, res) => {
     res.status(200).json(exercise)
 }
 
-// // This is the 'updateExercises' function.
+// This is the functional component 'updateExercises'.
 const updateExercise = async (req, res) => {
     // Here the variable 'id' is set to equal the value of the id of the request object.
     const {id} = req.params
@@ -89,5 +91,6 @@ const updateExercise = async (req, res) => {
     // Here the server responds with status code '200' and the value of the variable 'exercise' is returned as a JSON object.
     res.status(200).json(exercise)
 }
-// This exports all the controller functions enabling them to be imprted elsewhere.
+// This exports the controller functional components 'getExercises', 'getSingleExercise', 'createExercise', 'deleteExercise' and 'updateExercise' enabling them to be imported elsewhere.
 module.exports = {getExercises, getSingleExercise, createExercise, deleteExercise, updateExercise}
+

@@ -1,6 +1,8 @@
+// routes.js
+
 // This imports the 'express' module and assigns its functionality to the variable 'express', enabling the creation of Express applications.
 const express = require('express')
-// This line imports specific functions ('getExercises', 'getSingleExercise', 'createExercise', 'deleteExercise', 'updateExercise') from the 
+// This line imports the controller functional components 'getExercises', 'getSingleExercise', 'createExercise', 'deleteExercise' and 'updateExercise' from the 
 // 'exerciseController' file in the 'controllers' folder and assigns them to variables with the same names.
 const {getExercises, getSingleExercise, createExercise, deleteExercise, updateExercise} = require('../controllers/exerciseController')
 
@@ -28,3 +30,4 @@ router.patch('/:id', updateExercise)
 
 // This exports the 'expressRouter' instance stored in the variable 'router' enabling it to be imprted elsewhere.
 module.exports = router
+

@@ -1,10 +1,11 @@
+// server.js
+
 // This line imports the 'express' module and assigns its functionality to the variable 'express', enabling the creation of Express applications.
 const express = require('express')
 // This requires 'mongoose' then sets it as the value of the variable 'mongoose'.
 const mongoose = require('mongoose')
-
+// This requires 'cors' then sets it as the value of the variable 'cors'.
 const cors = require('cors')
-
 // This declares the variable 'mongoURI' and assigns the mongoDB connection string as it's value.
 const mongoURI = "mongodb+srv://Les2023:FullStackDev2023@gymlogapp.0discbh.mongodb.net/?retryWrites=true&w=majority"
 // This requires the file 'exercises' from the 'routes' folder importing it, then sets it as the value of the variable 'exerciseRoutes'.
@@ -12,8 +13,11 @@ const exerciseRoutes = require('./routes/exercises')
 // This declares the const type variable 'app' and sets its value as the express application.
 const app = express()
 
+// Here 'app.use' implements the cors middleware to handle Cross-Origin Resource Sharing (CORS).
 app.use (cors({
+    // Here the 'roigin' is set as "*" which allows requests from any origin (all origins).
     origin: "*",
+    // Here the 'credentials' option is set to 'true' which enables the sending  of credentials such as cookies in CORS requests.
     // credentials: true ---- This allows cookies
 }))
 
@@ -48,3 +52,5 @@ mongoose.connect(mongoURI)
         // Here 'console.log' is used to log the error to the console for troubleshooting.
         console.log(error)
     })
+
+    
