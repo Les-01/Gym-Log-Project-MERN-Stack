@@ -1,5 +1,3 @@
-// server.js
-
 // This line imports the 'express' module and assigns its functionality to the variable 'express', enabling the creation of Express applications.
 const express = require('express')
 // This requires 'mongoose' then sets it as the value of the variable 'mongoose'.
@@ -12,10 +10,18 @@ const mongoURI = "mongodb+srv://Les2023:FullStackDev2023@gymlogapp.0discbh.mongo
 const exerciseRoutes = require('./routes/exercises')
 // This declares the const type variable 'app' and sets its value as the express application.
 const app = express()
+// This requires the 'http' module then sets it as the value of the variable 'http'.
+const http = require('http');
+// Here the 'http.createServer()' method is used to create a http server instance and passed the 'app' variable containing the the express application.
+const server = http.createServer(app);
+// This requires the file 'socket' from the directory level above importing it, then sets it as the value of the variable 'socketIO' importing the socket instance.
+const socketIO = require('./socket');
+// Here the 'socketIO.init()' method is used to initialise the 'socker.IO' instance passed the 'server' variable containing the the instance of the http server.
+const io = socketIO.init(server);
 
 // Here 'app.use' implements the cors middleware to handle Cross-Origin Resource Sharing (CORS).
 app.use (cors({
-    // Here the 'roigin' is set as "*" which allows requests from any origin (all origins).
+    // Here the 'origin' is set as "*" which allows requests from any origin (all origins).
     origin: "*",
     // Here the 'credentials' option is set to 'true' which enables the sending  of credentials such as cookies in CORS requests.
     // credentials: true ---- This allows cookies
@@ -35,14 +41,13 @@ app.use((req, res, next) => {
 
 // Route 
 app.use('/api/exercises', exerciseRoutes)
-
 // Database Connection
 // This connects to the MongoDB database using the value of the variable 'mongoURI'.
 mongoose.connect(mongoURI)
     // If the database connection is successful.
     .then(() => {
         // This starts the Express app to listen on port 9000.
-        app.listen(9000, () => {
+        server.listen(9000, () => {
             // Here 'console.log' is used to log the message "Database connection successful, listening on port 9000." indicating a successful database connection and server start.
             console.log("Database connection successful, listening on port 9000.")
         })
@@ -52,5 +57,3 @@ mongoose.connect(mongoURI)
         // Here 'console.log' is used to log the error to the console for troubleshooting.
         console.log(error)
     })
-
-    

@@ -1,39 +1,42 @@
 /*--------------------  Declares and Defines Custom CSS Variables  --------------------*/
 :root {
-  --primaryColour: #1aac83;
-  --errorColour: #e7195a;
+  --primaryColour: white;
+  --secondayColour: Black;
+  --errorColour: red;
+  --acceptColour: #2f55a4;
 }
 
 /*--------------------  Main Body CSS  --------------------*/
 body {
-  background: #f1f1f1;
+  background-image: url('../images/gym2.jpg');
+  background-size: cover;
   margin: 0;
   font-family: Arial, Helvetica, sans-serif
 }
 
 /*--------------------  Header CSS  --------------------*/
 header {
-  background: #fff;
+  background: black;
 }
 
 header .container {
-  max-width: 1400px;
+  max-width: 1450px;
   margin: 0 auto;
-  padding: 10px 20px;
+  padding: 12px 22px;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
 header a {
-  color: #333;
+  color: var(--primaryColour);
   text-decoration: none;
 }
 
 /*--------------------  Class Specific CSS  --------------------*/
 .sitePages {
-  max-width: 1400px;
-  padding:20px;
+  max-width: 1450px;
+  padding:22px;
   margin: 0 auto;
 }
 
@@ -55,13 +58,13 @@ header a {
 .exercise_info h4 {
   margin: 0 0 10px 0;
   font-size: 1.2em;
-  color: var(--primaryColour)
+  color: var(--secondayColour)
 }
 
 .exercise_info p {
   margin: 0;
   font-size: 0.9em;
-  color: #555;
+  color: var(--secondayColour);
 }
 
 .exercise_info span {
@@ -69,15 +72,28 @@ header a {
   top: 20px;
   right: 20px;
   cursor: pointer;
-  background: #f1f1f1;
+  background: #d1d1d1;
   padding: 6px;
   border-radius: 50%;
-  color: #333;
+  display: inline-block;
+  color: var(--secondayColour);
 }
 
 /*--------------------  Exercise Entry Form CSS  --------------------*/
 label, input {
   display: block;
+  color: var(--secondayColour);
+}
+
+.newEntry {
+  color: var(--secondayColour);
+  background: #fff;
+  border-radius: 4px;
+  margin: 20px auto;
+  padding: 20px;
+  position: relative;
+  width: 100%;
+  box-shadow: 2px 2px 5px rgba(0,0,0,0,.5)
 }
 
 input {
@@ -88,12 +104,13 @@ input {
   border: 1px solid #ddd;
   border-radius: 4px;
   box-sizing: border-box;
+  color: var(--secondayColour);
 }
 
 form button {
-  background: var(--primaryColour);
+  background: var(--acceptColour);
   border: 0;
-  color: #fff;
+  color: var(--primaryColour);
   padding: 10px;
   font-family: Arial, Helvetica, sans-serif;
   border-radius: 4px;
@@ -108,4 +125,38 @@ div.errorMessage {
   color: var(--errorColour);
   border-radius: 4px;
   margin: 20px 0;
+}
+
+input.error {
+  border: 1px solid var(--errorColour);
+}
+
+/*--------------------  Edit/Delete Button CSS  --------------------*/
+.exercise_info .editButton {
+  display: inline-block;
+  margin-right: 80px; 
+  background-color: var(--acceptColour);
+  color: var(--primaryColour);
+}
+
+.exercise_info .deleteButton {
+  display: inline-block;
+  margin-right: 10px; 
+  background-color: var(--errorColour);
+  color: var(--primaryColour);
+}
+
+/*--------------------  Modal Cancel/Save Button CSS  --------------------*/
+.modalCancelButton {
+  display: inline-block;
+  padding: 10px;
+  margin: 10px;
+  background-color: var(--errorColour);
+}
+
+.modalSaveButton {
+  display: inline-block;
+  padding: 10px;
+  margin: 10px;
+  background-color: var(--acceptColour);
 }
