@@ -47,24 +47,30 @@ header a {
 }
 
 .exercise_info {
-  background: #fff;
+  background-color: rgba(0, 0, 0, 0.75);
+  box-shadow: 0 0 10px #000;
   border-radius: 4px;
   margin: 20px auto;
   padding: 20px;
   position: relative;
-  box-shadow: 2px 2px 5px rgba(0,0,0,0,.5)
+  box-shadow: 2px 2px 5px rgba(0,0,0,0,.5);
+  color: var(--primaryColour);  
+}
+
+h2 {
+  color: var(--primaryColour);
 }
 
 .exercise_info h4 {
   margin: 0 0 10px 0;
   font-size: 1.2em;
-  color: var(--secondayColour)
+  color: var(--primaryColour);  
 }
 
 .exercise_info p {
   margin: 0;
-  font-size: 0.9em;
-  color: var(--secondayColour);
+  font-size: 1em;
+  color: var(--primaryColour);  
 }
 
 .exercise_info span {
@@ -82,12 +88,13 @@ header a {
 /*--------------------  Exercise Entry Form CSS  --------------------*/
 label, input {
   display: block;
-  color: var(--secondayColour);
+  color: var(--primaryColour);  
 }
 
 .newEntry {
+  background-color: rgba(0, 0, 0, 0.75);
+  box-shadow: 0 0 10px #000;
   color: var(--secondayColour);
-  background: #fff;
   border-radius: 4px;
   margin: 20px auto;
   padding: 20px;
@@ -107,7 +114,7 @@ input {
   color: var(--secondayColour);
 }
 
-form button {
+form button, nav button {
   background: var(--acceptColour);
   border: 0;
   color: var(--primaryColour);
@@ -160,3 +167,31 @@ input.error {
   margin: 10px;
   background-color: var(--acceptColour);
 }
+
+/*--------------------  Nav Bar CSS  --------------------*/
+nav {
+  display: flex;
+  align-items: center;
+}
+
+nav a {
+  margin-left: 10px;
+}
+
+/*--------------------  Signup/Login Form CSS  --------------------*/
+form.signup, form.login {
+  background-color: rgba(0, 0, 0, 0.75);
+  margin: auto auto;
+  padding: 40px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px #000;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 500px;
+  height: 400px;
+  color: var(--primaryColour);
+}
+

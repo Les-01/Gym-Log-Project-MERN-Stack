@@ -18,7 +18,7 @@ const ExerciseEntryForm = () => {
     // When the 'setEmptyFormFields' function is called and passed a value or object containing values, that value or values will be assigned as an element in the 'emptyFormFields' array.
     const [emptyFormFields, setEmptyFormFields] = useState([])
 
-    // Here the asynchronous function 'submissionHandler' is defined and passed the vent object (e) to handle user data imput submissions via a button click.
+    // Here the asynchronous function 'submissionHandler' is defined and passed the event object (e) to handle user data input submissions via a button click.
     const submissionHandler = async (e) => {
         // This prevents the default form submission behaviour of refreshing the page.
         e.preventDefault()
@@ -105,7 +105,7 @@ const ExerciseEntryForm = () => {
             />
             {/* Button to add exercise */}
             <button>Add Exercise</button>
-            {/* This is a conditional check, it ensures the variable 'error' is has value and is valid before rendering the error message */}
+            {/* This is a conditional check, it checks if the variable 'error' has value and is valid before rendering the error message */}
             {error && <div className="errorMessage">{error}</div>}
         </form>
     )

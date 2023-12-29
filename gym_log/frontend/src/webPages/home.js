@@ -4,7 +4,7 @@ import {useEffect, useState} from 'react'
 import io from 'socket.io-client';
 // This imports the variable 'ExerciseInfo' from the file 'exerciseInfo' within the 'components' folder.
 import ExerciseInfo from '../components/exerciseInfo'
-// This imports the variable 'ExerciseInfo' from the file 'exerciseInfo' within the 'components' folder.
+// This imports the variable 'ExerciseEntryForm' from the file 'exerciseInfo' within the 'components' folder.
 import ExerciseEntryForm from '../components/exerciseEntryForm'
 
 // This is the functional component 'Home'.
@@ -77,6 +77,7 @@ const Home = () => {
                 {exercises && exercises.map((exercise) => (
                     // This renders the ExerciseInfo components for each exercise in the 'exercises' array.
                     <ExerciseInfo key = {exercise._id} exercise = {exercise}/>
+                    
                 ))}
             </div>
             {/* This renders the 'ExerciseEntryForm' component */}

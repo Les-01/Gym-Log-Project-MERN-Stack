@@ -13,7 +13,7 @@ const getExercises = async (req, res) => {
     res.status(200).json(exercises)
 }
 
-// Promise better way of doing it.
+// try and catch block better way of doing it.
 // const getExercises = async (req, res) => {
 //     try {
 //         const exercises = await Exercise.find({}).sort({ createdAt: -1 });

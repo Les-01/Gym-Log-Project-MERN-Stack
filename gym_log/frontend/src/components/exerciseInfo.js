@@ -1,5 +1,6 @@
 // This imports the 'useState' hook from the React library.
 import React, { useState } from 'react';
+
 // This is the functional component 'ExerciseInfo' which has been passed the object 'exercise'.
 const ExerciseInfo = ({exercise}) => {
     // This initializes the variable 'showModal' and the function 'setShowModal' which are set to equal the React hook 'useState' which has an initial value of 'false'.
@@ -80,15 +81,7 @@ const ExerciseInfo = ({exercise}) => {
             // Here 'console.error' is used to display the error message 'Error updating exercise:' and the error object itself.
             console.error('Error updating exercise:', error);
         }
-    };
-
-    // This is the 'formatDate' function which has been passed the parameter 'dateString' to convert a date string to a specific format.
-    const formatDate = (dateString) => {
-        // Here a new 'Date' object from the provided date string is created and assigned as the value of the variable 'createdAt'.
-        const createdAt = new Date(dateString);
-        // This extracts the day, month, and year from the 'Date' object stored in the variable 'createdAt' returning a formatted date string.
-        return `${createdAt.getDate()}-${createdAt.getMonth() + 1}-${createdAt.getFullYear()}`;
-    };    
+    };      
 
     // When 'ExerciseInfo' is called it returns the code within the parenthesis.
      return (        
@@ -154,3 +147,11 @@ const ExerciseInfo = ({exercise}) => {
 }
 // This exports the functional component 'ExerciseInfo' as the default export of this module.
 export default ExerciseInfo
+
+// This is the 'formatDate' function which has been passed the parameter 'dateString' to convert a date string to a specific format.
+export const formatDate = (dateString) => {
+    // Here a new 'Date' object from the provided date string is created and assigned as the value of the variable 'createdAt'.
+    const createdAt = new Date(dateString);
+    // This extracts the day, month, and year from the 'Date' object stored in the variable 'createdAt' returning a formatted date string.
+    return `${createdAt.getDate()}-${createdAt.getMonth() + 1}-${createdAt.getFullYear()}`;
+};  

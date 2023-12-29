@@ -3,6 +3,10 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 // This imports the variable 'Home' from the file 'home' in the 'webPages' folder.
 import Home from './webPages/home'
+// This imports the variable 'Home' from the file 'home' in the 'webPages' folder.
+import Signup from './webPages/signup'
+// This imports the variable 'Home' from the file 'home' in the 'webPages' folder.
+import Login from './webPages/login'
 // This imports the variable 'NavBar' from the file 'navBar' in the 'components' folder.
 import NavBar from './components/navBar'
 
@@ -18,13 +22,21 @@ function App() {
         <div className = "sitePages">
           {/* This is the 'Routes' component which contains all the routes.*/}
           <Routes>
-            {/* This is a 'Route' component which defines a specific route.*/}
+            {/* This is a 'Route' component which defines the specific route to the Home component.*/}
             <Route
-              // The path="/" defines the root URL.
               path="/"
-              // This is the element prop which renders the Home component for the root URL, loading the HomePage on arrival.
               element = {<Home />}
             />
+            {/* This is a 'Route' component which defines the specific route to the Signup component.*/}
+            <Route
+              path="/signup"
+              element = {<Signup />}
+            />
+            {/* This is a 'Route' component which defines the specific route to the Login component.*/}
+            <Route    
+              path="/login"
+              element = {<Login />}
+            />            
           </Routes>
         </div>
       </BrowserRouter>

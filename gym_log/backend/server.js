@@ -8,6 +8,10 @@ const cors = require('cors')
 const mongoURI = "mongodb+srv://Les2023:FullStackDev2023@gymlogapp.0discbh.mongodb.net/?retryWrites=true&w=majority"
 // This requires the file 'exercises' from the 'routes' folder importing it, then sets it as the value of the variable 'exerciseRoutes'.
 const exerciseRoutes = require('./routes/exercises')
+
+// This requires the file 'users' from the 'routes' folder importing it, then sets it as the value of the variable 'userRoutes'.
+const userRoutes = require('./routes/users')
+
 // This declares the const type variable 'app' and sets its value as the express application.
 const app = express()
 // This requires the 'http' module then sets it as the value of the variable 'http'.
@@ -39,8 +43,16 @@ app.use((req, res, next) => {
     next()
 })
 
-// Route 
+
+// Routes
+// This is the express route for all the exercise C.R.U.D functions
 app.use('/api/exercises', exerciseRoutes)
+// This is the express route for all the user C.R.U.D functions
+app.use('/api/user', userRoutes)
+
+
+
+
 // Database Connection
 // This connects to the MongoDB database using the value of the variable 'mongoURI'.
 mongoose.connect(mongoURI)

@@ -6,7 +6,7 @@ const {getExercises, getSingleExercise, createExercise, deleteExercise, updateEx
 // Here a new router object is initialised by calling express.Router() which is then stored in the variable named router.
 const router = express.Router()
 
-// Routes
+// Exercise Routes
 // This defines the route handling GET requests to the root URL ('/') to fetch all exercises by executing the 'getExercises' function.
 router.get('/', getExercises)
 // This defines the route handling GET requests to the URL with an ID to fetch a single exercise by executing the 'getSingleExercise' function. 
