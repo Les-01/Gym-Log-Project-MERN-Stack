@@ -39,7 +39,6 @@ export const useLogin = () => {
             setIsLoading(false)
             // This sets the value of 'setIsLoading' to 'json.error' which will contain the error property the server sent back. 
             setError(json.error)
-            console.log(error)
         }
         // This 'IF' statement checks to see if the status of the variable response is 'OK', if it is OK execute the code within the statement.
         if (response.ok) {

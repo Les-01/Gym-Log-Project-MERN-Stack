@@ -1,6 +1,7 @@
 // This imports the 'BrowserRouter', 'Routes' and 'Route' components from the routing library 'React Router'.
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+// This imports 'useAuthorisationContext' from the file 'useAuthorisationContext' within the 'hooks' folder.
+import { useAuthorisationContext } from './hooks/useAuthorisationContext'
 // This imports the variable 'Home' from the file 'home' in the 'webPages' folder.
 import Home from './webPages/home'
 // This imports the variable 'Home' from the file 'home' in the 'webPages' folder.
@@ -12,6 +13,8 @@ import NavBar from './components/navBar'
 
 // This is the functional component 'App'.
 function App() {
+   // This initialises the object 'user' and assigns 'useAuthorisationContext' as its value.  
+   const {user} = useAuthorisationContext()
   // When 'App' is called it returns the code within the parenthesis.
   return (
     <div className="App">
@@ -23,19 +26,22 @@ function App() {
           {/* This is the 'Routes' component which contains all the routes.*/}
           <Routes>
             {/* This is a 'Route' component which defines the specific route to the Home component.*/}
+            {/* A ternary operator is used which enables access to the 'Home' component if the user is logged in otherwise the user is redirected to the 'Login' component.*/}
             <Route
-              path="/"
-              element = {<Home />}
+              path="/"              
+              element = {user ? <Home /> : <Navigate to ="/login" />}
             />
             {/* This is a 'Route' component which defines the specific route to the Signup component.*/}
+            {/* A ternary operator is used which enables access to the 'Signup' component if the user is NOT logged in otherwise the user is redirected to the 'Home' component.*/}
             <Route
               path="/signup"
-              element = {<Signup />}
+              element = {!user ? <Signup /> : <Navigate to="/" />}
             />
             {/* This is a 'Route' component which defines the specific route to the Login component.*/}
+            {/* A ternary operator is used which enables access to the 'Login' component if the user is NOT logged in otherwise the user is redirected to the 'Home' component.*/}
             <Route    
               path="/login"
-              element = {<Login />}
+              element = {!user ? <Login /> : <Navigate to="/" />}
             />            
           </Routes>
         </div>

@@ -43,15 +43,11 @@ app.use((req, res, next) => {
     next()
 })
 
-
 // Routes
 // This is the express route for all the exercise C.R.U.D functions
 app.use('/api/exercises', exerciseRoutes)
 // This is the express route for all the user C.R.U.D functions
 app.use('/api/user', userRoutes)
-
-
-
 
 // Database Connection
 // This connects to the MongoDB database using the value of the variable 'mongoURI'.

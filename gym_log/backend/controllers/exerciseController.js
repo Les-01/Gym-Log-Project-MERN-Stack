@@ -7,8 +7,10 @@ const socketIO = require('../socket');
 
 // This is the functional component 'getExercises'.
 const getExercises = async (req, res) => {
-    // Here the 'Exercise.find' method is used to find all of the exercises. The '.sort' method and '-1' is used to sort the results in descending order from creation. 
-    const exercises = await Exercise.find({}).sort({createdAt: -1})
+    // This initialises the variable 'user_id' and assigns it the value off the 'user_id' property stored in the request object.
+    const user_id = req.user._id
+    // Here the 'Exercise.find({user_id})' method is used to find all of the exercises that match the logged in users 'user_id'. The '.sort' method and '-1' is used to sort the results in descending order from creation. 
+    const exercises = await Exercise.find({user_id}).sort({createdAt: -1})
     // Here the server responds with status code '200' and the value of the variable 'exercises' is returned as a JSON object.
     res.status(200).json(exercises)
 }
@@ -69,8 +71,10 @@ const createExercise = async (req, res) => {
     }     
     // // This 'TRY' and 'CATCH' block act as the function that adds entries to the database.
     try {
-        // Here the 'Exercise.create' method is used and passed the variables 'exerciseName', 'reps' and 'weight' to to add their value to the database. 
-        const exercise = await Exercise.create({exerciseName, reps, weight})
+        // This initialises the variable 'user_id' and assigns it the value off the 'user_id' property stored in the request object.
+        const user_id = req.user._id
+        // Here the 'Exercise.create' method is used and passed the variables 'exerciseName', 'reps', 'weight' and 'user_id' to add the values to the database. 
+        const exercise = await Exercise.create({exerciseName, reps, weight, user_id})
         // This calls the 'getIO' method from the socketIO module, which returns the Socket.IO instance and then applies the 'emit' method to that instance which sends the 'exerciseCreated' event to the server 
         // along with the 'exercise' object containing the data on the exercise entry to be created. 
         socketIO.getIO().emit('exerciseCreated', exercise);

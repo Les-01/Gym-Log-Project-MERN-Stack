@@ -1,7 +1,12 @@
 // This imports the 'useState' hook from the React library.
 import { useState } from "react"
+// This imports 'useAuthorisationContext' from the file 'useAuthorisationContext' within the 'hooks' folder.
+import { useAuthorisationContext } from '../hooks/useAuthorisationContext'
+
 // This is the functional component 'ExerciseEntryForm'.
 const ExerciseEntryForm = () => {
+    // This initialises the object 'user' and assigns 'useAuthorisationContext' as its value.  
+    const {user} = useAuthorisationContext()
     // This initializes the variable 'exerciseName' and the function 'setExerciseName' which are set to equal the React hook 'useState' which has an initial value of an empty string ('').
     // When the 'setExerciseName' function is called and passed a value or object containing values, that value or values will be assigned as the new value of the variable 'exerciseName'.
     const [exerciseName, setExerciseName] = useState('')
@@ -22,6 +27,11 @@ const ExerciseEntryForm = () => {
     const submissionHandler = async (e) => {
         // This prevents the default form submission behaviour of refreshing the page.
         e.preventDefault()
+
+        if (!user) {
+            setError('Please log in')
+            return
+        }
         // Here an exercise object is created with the initial values from the state.
         const exercise = {exerciseName, weight, reps}
         // Here data is 'fetched' from 'http://localhost:9000/api/exercises' using 'await' which pauses the execution of the function until it's completed, then assigns the result as the value of the variable 'response'.
@@ -32,7 +42,9 @@ const ExerciseEntryForm = () => {
             body: JSON.stringify(exercise),
             headers: {
                 // This specifies that the request body is in JSON format.
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                // This sends the authorisation header with the users token to the server with the fetch request.
+                'Authorization': `Bearer ${user.token}`
             }
         })
         // This parses the response from JSON string into a JavaScript object using 'await' which pauses the execution of the function until it's completed, then assigns the JavaScript object to the variable 'json'.

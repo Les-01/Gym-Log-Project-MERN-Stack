@@ -15,6 +15,10 @@ const exerciseSchema = new Schema({
     weight: {
         type: Number,
         required: true
+    },
+    user_id: {
+        type: String,
+        required: true
     }
 }, {timestamps: true})
 // This uses 'mongoose.model' which has been passed the schema through the variable 'exerciseSchema' and the string 'Exercise' to create a new model using the schema to create a collection called Exercise.

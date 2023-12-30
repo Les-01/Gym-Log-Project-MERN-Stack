@@ -49,4 +49,4 @@ const userSignup = async (req, res) => {
     }
 }
 // This exports the controller functional components 'userLogin' and 'userSignup' enabling them to be imported elsewhere.
-module.exports = {userLogin, userSignup} 
+module.exports = {userLogin, userSignup, serverSecretString} 

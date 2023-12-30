@@ -1,7 +1,7 @@
 // authorisationContext.js
 
-// This imports the 'createContext' and 'useReducer' from the React library.
-import { createContext, useReducer } from 'react'
+// This imports the 'createContext', 'useReducer' and 'useEffect' from the React library.
+import { createContext, useReducer, useEffect } from 'react'
 // Here React's 'createContext()' function is used to create an 'AuthorisationContext'.
 export const AuthorisationContext = createContext()
 
@@ -27,6 +27,17 @@ export const AuthorisationContextProvider = ({ children }) => {
     const [state, dispatch] = useReducer(AuthorisationReducer, {
         user: null
     });
+
+    useEffect(() => {
+        // This retrieves the json object 'user' from the browser local storage, converts it into a javascript object and assigns the object to the variable 'user'.
+        const user = JSON.parse(localStorage.getItem('user'))
+        // This 'IF' statement checks if the variable 'user' has a value, if it does execute the code within the if statement.
+        if (user) {
+            // This essentially logs the user back in again if they have refreshed, reloaded or revisted the page.
+            dispatch({type: 'LOGIN', payload: user})
+        }
+    }, []) 
+    
     // Here console.log is used to log the current state to the console for debugging and error checking.
     console.log('Authorisation Context state: ', state)
 

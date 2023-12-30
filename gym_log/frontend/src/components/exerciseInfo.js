@@ -1,8 +1,12 @@
 // This imports the 'useState' hook from the React library.
 import React, { useState } from 'react';
+// This imports 'useAuthorisationContext' from the file 'useAuthorisationContext' within the 'hooks' folder.
+import { useAuthorisationContext } from '../hooks/useAuthorisationContext'
 
 // This is the functional component 'ExerciseInfo' which has been passed the object 'exercise'.
 const ExerciseInfo = ({exercise}) => {
+    // This initialises the object 'user' and assigns 'useAuthorisationContext' as its value.  
+    const {user} = useAuthorisationContext()
     // This initializes the variable 'showModal' and the function 'setShowModal' which are set to equal the React hook 'useState' which has an initial value of 'false'.
     // When the 'setShowModal' function is called and passed a value of either 'true' or 'false' that value will be assigned as the new value of the variable 'showModal'.
     const [showModal, setShowModal] = useState(false);
@@ -18,10 +22,17 @@ const ExerciseInfo = ({exercise}) => {
 
     // This is the 'deleteButton' function.
     const deleteButton = async () => {
+        if (!user) {
+            return
+        }
         // Here data is 'fetched' from 'http://localhost:9000/api/exercises/' + the unique id of the specific exercise entry, using 'await' which pauses the execution of the function until it's completed.
         await fetch('http://localhost:9000/api/exercises/' + exercise._id, {
             // This declares the HTTP method used for the request, here 'DELETE' is used to delete the database entry that matches the unique id of the specific exercise entry.
-            method: 'DELETE'
+            method: 'DELETE',
+            headers: {
+                // This sends the authorisation header with the users token to the server with the fetch request.
+                'Authorization': `Bearer ${user.token}`
+            }
         })
     }
     // This is the 'editButton' function.
@@ -36,6 +47,9 @@ const ExerciseInfo = ({exercise}) => {
     };
     // This is the 'handleSaveChanges' function.
     const handleSaveChanges = async () => {
+        if (!user) {
+            return
+        }
         try {
             // This creates an object containing all the updated exercise information.
             const updatedExercise = {
@@ -53,6 +67,8 @@ const ExerciseInfo = ({exercise}) => {
                 // This sets the content type to JSON.
                 headers: {
                     'Content-Type': 'application/json',
+                    // This sends the authorisation header with the users token to the server with the fetch request.
+                    'Authorization': `Bearer ${user.token}`
                 },
                 // Here 'JSON.stringify' is passed the variable 'updatedExercise' containing the JavaScript updatedExercise object to convert the object into JSON string and the set it as the request body.
                 body: JSON.stringify(updatedExercise),
