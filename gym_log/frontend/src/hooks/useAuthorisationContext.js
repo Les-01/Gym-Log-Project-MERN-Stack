@@ -1,5 +1,3 @@
-// useAuthorisationContext.js
-
 // This imports 'AuthorisationContext' from the file 'authorisationContext' within the 'context' folder.
 import { AuthorisationContext } from '../context/authorisationContext'
 // This imports the 'useContext' hook from the React library.
@@ -18,4 +16,3 @@ export const useAuthorisationContext = () => {
     // This returns the context from useContext.
     return context
 }
-

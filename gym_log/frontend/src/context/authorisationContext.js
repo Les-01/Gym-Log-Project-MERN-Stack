@@ -1,5 +1,3 @@
-// authorisationContext.js
-
 // This imports the 'createContext', 'useReducer' and 'useEffect' from the React library.
 import { createContext, useReducer, useEffect } from 'react'
 // Here React's 'createContext()' function is used to create an 'AuthorisationContext'.
@@ -48,5 +46,3 @@ export const AuthorisationContextProvider = ({ children }) => {
         </AuthorisationContext.Provider>
     )
 }
-
-

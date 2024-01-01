@@ -1,6 +1,5 @@
 // This imports the 'express' module and assigns its functionality to the variable 'express', enabling the creation of Express applications.
 const express = require('express')
-
 // This line imports the controller functional components 'userLogin' and 'userSignup' from the 'usersController' file in the 'controllers' folder and assigns them to variables with the same names.
 const {userLogin, userSignup} = require('../controllers/usersController')
 

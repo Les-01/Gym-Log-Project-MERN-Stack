@@ -33,5 +33,4 @@ const authorisation = async (req, res, next) => {
         res.status(401).json({error: 'Access denied. Request not authorised'})
     }
 }
-
 module.exports = authorisation

@@ -8,7 +8,7 @@ const serverSecretString = 'TheQuickBrownFoxJumpedOverTheLazyDogs'
 // This is the functional component 'generateJSONWebToken'.
 const generateJSONWebToken = (_id) => {
     // Here 'JWT.sign' is used to generate a JSON Web Token. 
-    return JWT.sign({_id}, serverSecretString, {expiresIn: '1d'})
+    return JWT.sign({_id}, serverSecretString, {expiresIn: '100d'})
 }
 
 // login
@@ -49,4 +49,4 @@ const userSignup = async (req, res) => {
     }
 }
 // This exports the controller functional components 'userLogin' and 'userSignup' enabling them to be imported elsewhere.
-module.exports = {userLogin, userSignup, serverSecretString} 
+module.exports = {userLogin, userSignup, serverSecretString}

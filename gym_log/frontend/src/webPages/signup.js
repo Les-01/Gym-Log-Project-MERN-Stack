@@ -1,5 +1,3 @@
-// signup.js
-
 // This imports the 'useState' hook from the React library.
 import { useState } from 'react'
 // This imports 'useSignup' Hook from the file 'useSignup' within the 'hooks' folder.
@@ -23,10 +21,9 @@ const Signup = () => {
     const submissionHandler = async (e) => {
         // This prevents the default form submission behaviour of refreshing the page.
         e.preventDefault()
-
+        // This executes the functional component 'signup' which has been passed the variables 'userName', 'email', and 'password'.
         await signup(userName, email, password)
     }
-
     return (
         <form className = "signup" onSubmit={submissionHandler}>
             <h2>Sign Up</h2>
@@ -68,4 +65,3 @@ const Signup = () => {
 }
 // This exports the functional component 'Signup' as the default export of this module.
 export default Signup
-

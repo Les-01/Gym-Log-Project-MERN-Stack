@@ -7,30 +7,27 @@ const socketIO = require('../socket');
 
 // This is the functional component 'getExercises'.
 const getExercises = async (req, res) => {
+    try {
     // This initialises the variable 'user_id' and assigns it the value off the 'user_id' property stored in the request object.
     const user_id = req.user._id
     // Here the 'Exercise.find({user_id})' method is used to find all of the exercises that match the logged in users 'user_id'. The '.sort' method and '-1' is used to sort the results in descending order from creation. 
     const exercises = await Exercise.find({user_id}).sort({createdAt: -1})
     // Here the server responds with status code '200' and the value of the variable 'exercises' is returned as a JSON object.
     res.status(200).json(exercises)
+    } catch (error) {
+        // If an error occurs during the execution of the code within the try block, it will be caught here.
+        console.error("Error in getExercises:", error);
+        res.status(500).json({ error: "An error occurred while fetching exercises" })
+    }
 }
-
-// try and catch block better way of doing it.
-// const getExercises = async (req, res) => {
-//     try {
-//         const exercises = await Exercise.find({}).sort({ createdAt: -1 });
-//         res.status(200).json(exercises);
-//     } catch (error) {
-//         res.status(500).json({ error: error.message });
-//     }
-// };
 
 // This is the functional component 'getSingleExercise'.
 const getSingleExercise = async (req, res) => {
+    try {
     // Here the variable 'id' is set to equal the value of the id of the request object.
     const {id} = req.params
     // This 'IF' statement declares that if the value of the variable 'id' is not a mongoos type of object id execute the code within the code block.
-    if(!mongoose.Types.ObjectId.isValid(id)) {
+    if (!mongoose.Types.ObjectId.isValid(id)) {
         // Here the server responds with status code '404' and a JSON object with an error property with a string value of "No exercise found".
         return res.status(404).json({error: "No exercise found"})
     }
@@ -43,6 +40,11 @@ const getSingleExercise = async (req, res) => {
     }
     // Here the server responds with status code '200' and the value of the variable 'exercise' is returned as a JSON object.
     res.status(200).json(exercise)
+    } catch (error) {
+        // If an error occurs during the execution of the code within the try block, it will be caught here.
+        console.error("Error in getSingleExercise:", error);
+        res.status(500).json({ error: "An error occurred while fetching the exercise" });
+    }
 }
 
 // This is the functional component 'createExercise'.
@@ -81,59 +83,74 @@ const createExercise = async (req, res) => {
         // Here the server responds with status code '200' and the value of the variable 'exercise' is returned as a JSON object.
         res.status(200).json(exercise)
     } catch (error) {
-        // Server responds with status code 400
-        res.status(400).json({error: error.message})
+        if (error.name === 'ValidationError') {
+            return res.status(400).json({ error: "Validation failed", details: error.errors });
+        } else {
+            console.error("Error in createExercise:", error);
+            return res.status(500).json({ error: "An error occurred while creating the exercise" });
+        }
     }
 }
 
 // This is the functional component 'deleteExercise'.
 const deleteExercise = async (req, res) => {
-    // Here the variable 'id' is set to equal the value of the id of the request object.
-    const {id} = req.params
-    // This 'IF' statement declares that if the value of the variable 'id' is not a mongoos type of object id execute the code within the code block.
-    if(!mongoose.Types.ObjectId.isValid(id)) {
-        // Here the server responds with status code '404' and a JSON object with an error property with a string value of "No exercise found".
-        return res.status(404).json({error: "No exercise found"})
+    try {
+        // Here the variable 'id' is set to equal the value of the id of the request object.
+        const {id} = req.params
+        // This 'IF' statement declares that if the value of the variable 'id' is not a mongoos type of object id execute the code within the code block.
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            // Here the server responds with status code '404' and a JSON object with an error property with a string value of "No exercise found".
+            return res.status(404).json({error: "No exercise found"})
+        }
+        // Here the 'Exercise.findOneAndDelete' method is used to find a specific exercise by its id and delete it. 
+        const exercise = await Exercise.findOneAndDelete({_id: id})
+        // This 'IF' statement declares that if the variable 'exercise' does is not exist or has no value execute the code within the code block.
+        if (!exercise) {
+            // Here the server responds with status code '404' and a JSON object with an error property with a string value of "No exercise found".
+            return res.status(404).json({error: "No exercise found"})
+        }
+        // This calls the 'getIO' method from the socketIO module, which returns the Socket.IO instance and then applies the 'emit' method to that instance which sends the 'exerciseDeleted' event to the server 
+        // along with the 'id' object containing the id of the object to be deleted. 
+        socketIO.getIO().emit('exerciseDeleted', id);
+        // Here the server responds with status code '200' and the value of the variable 'exercise' is returned as a JSON object.
+        res.status(200).json(exercise)
+    } catch (error) {
+        console.error("Error in deleteExercise:", error);
+        res.status(500).json({ error: "An error occurred while deleting the exercise" });
     }
-    // Here the 'Exercise.findOneAndDelete' method is used to find a specific exercise by its id and delete it. 
-    const exercise = await Exercise.findOneAndDelete({_id: id})
-    // This 'IF' statement declares that if the variable 'exercise' does is not exist or has no value execute the code within the code block.
-    if(!exercise) {
-        // Here the server responds with status code '404' and a JSON object with an error property with a string value of "No exercise found".
-        return res.status(404).json({error: "No exercise found"})
-    }
-    // This calls the 'getIO' method from the socketIO module, which returns the Socket.IO instance and then applies the 'emit' method to that instance which sends the 'exerciseDeleted' event to the server 
-    // along with the 'id' object containing the id of the object to be deleted. 
-    socketIO.getIO().emit('exerciseDeleted', id);
-    // Here the server responds with status code '200' and the value of the variable 'exercise' is returned as a JSON object.
-    res.status(200).json(exercise)
 }
 
 // This is the functional component 'updateExercises'.
 const updateExercise = async (req, res) => {
-    // Here the variable 'id' is set to equal the value of the id of the request object.
-    const {id} = req.params
-    // This 'IF' statement declares that if the value of the variable 'id' is not a mongoos type of object id execute the code within the code block.
-    if(!mongoose.Types.ObjectId.isValid(id)) {
-        // Here the server responds with status code '404' and a JSON object with an error property with a string value of "No exercise found".
-        return res.status(404).json({error: "No exercise found"})
+    try {
+        // Here the variable 'id' is set to equal the value of the id of the request object.
+        const {id} = req.params
+        // This 'IF' statement declares that if the value of the variable 'id' is not a mongoos type of object id execute the code within the code block.
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            // Here the server responds with status code '404' and a JSON object with an error property with a string value of "No exercise found".
+            return res.status(404).json({error: "No exercise found"})
+        }
+        // Here the 'Exercise.findOneAndUpdate' method is used to find a specific exercise by its id and update its value. 
+        const exercise = await Exercise.findOneAndUpdate({_id: id}, {
+            // Here the spread operator '...' is used to create a new object with all of the properties and values from req.body.
+            ...req.body},
+            // Here the 'new: true' option is used to guarentee the exercise object will contain the updated data after the update operation finishes enabling the updated object to be emitted in the 'exerciseUpdated' event.
+            {new: true})
+        // This 'IF' statement declares that if the variable 'exercise' does is not exist or has no value execute the code within the code block.
+        if (!exercise) {
+            // Here the server responds with status code '404' and a JSON object with an error property with a string value of "No exercise found".
+            return res.status(404).json({error: "No exercise found"})
+        }
+        // This calls the 'getIO' method from the socketIO module, which returns the Socket.IO instance and then applies the 'emit' method to that instance which sends the 'exerciseUpdated' event to the server 
+        // along with the 'exercise' object containing the data on the exercise entry to be updated. 
+        socketIO.getIO().emit('exerciseUpdated', exercise);
+        // Here the server responds with status code '200' and the value of the variable 'exercise' is returned as a JSON object.
+        res.status(200).json(exercise)
+    } catch (error) {
+        console.error("Error in updateExercise:", error);
+        res.status(500).json({ error: "An error occurred while updating the exercise" });
     }
-    // Here the 'Exercise.findOneAndUpdate' method is used to find a specific exercise by its id and update its value. 
-    const exercise = await Exercise.findOneAndUpdate({_id: id}, {
-        // Here the spread operator '...' is used to create a new object with all of the properties and values from req.body.
-        ...req.body},
-        // Here the 'new: true' option is used to guarentee the exercise object will contain the updated data after the update operation finishes enabling the updated object to be emitted in the 'exerciseUpdated' event.
-        {new: true})
-    // This 'IF' statement declares that if the variable 'exercise' does is not exist or has no value execute the code within the code block.
-    if(!exercise) {
-        // Here the server responds with status code '404' and a JSON object with an error property with a string value of "No exercise found".
-        return res.status(404).json({error: "No exercise found"})
-    }
-    // This calls the 'getIO' method from the socketIO module, which returns the Socket.IO instance and then applies the 'emit' method to that instance which sends the 'exerciseUpdated' event to the server 
-    // along with the 'exercise' object containing the data on the exercise entry to be updated. 
-    socketIO.getIO().emit('exerciseUpdated', exercise);
-    // Here the server responds with status code '200' and the value of the variable 'exercise' is returned as a JSON object.
-    res.status(200).json(exercise)
 }
+
 // This exports the controller functional components 'getExercises', 'getSingleExercise', 'createExercise', 'deleteExercise' and 'updateExercise' enabling them to be imported elsewhere.
 module.exports = {getExercises, getSingleExercise, createExercise, deleteExercise, updateExercise}

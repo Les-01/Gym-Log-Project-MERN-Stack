@@ -18,10 +18,9 @@ const Login = () => {
     const submissionHandler = async (e) => {
         // This prevents the default form submission behaviour of refreshing the page.
         e.preventDefault()
-
+        // This executes the functional component 'login' which has been passed the variables 'email', and 'password'.
         await login(email, password)
     }
-
     return (
         <form className = "login" onSubmit={submissionHandler}>
             <h2>Login</h2>

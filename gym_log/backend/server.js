@@ -65,3 +65,5 @@ mongoose.connect(mongoURI)
         // Here 'console.log' is used to log the error to the console for troubleshooting.
         console.log(error)
     })
+// This exports the variable 'app' contaiing the express server instance and server containing the http server instance enabling them to be imported elsewhere.
+module.exports = { app, server };

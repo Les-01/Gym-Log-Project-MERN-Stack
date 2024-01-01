@@ -1,5 +1,3 @@
-// useLogin.js
-
 // This imports the 'useState' hook from the React library.
 import { useState } from 'react'
 // This imports 'useAuthorisationContext' from the file 'useAuthorisationContext' within the 'hooks' folder.
@@ -54,4 +52,3 @@ export const useLogin = () => {
     // This returns 'signup', 'isLoading' and 'error'.
     return {login, isLoading, error}
 }
-

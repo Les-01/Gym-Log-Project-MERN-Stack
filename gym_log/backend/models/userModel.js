@@ -1,5 +1,3 @@
-// userModel.js
-
 // This requires 'mongoose' then sets it as the value of the variable 'mongoose'.
 const mongoose = require('mongoose')
 // This requires 'bcrypt' then sets it as the value of the variable 'bcrypt'.
@@ -103,4 +101,3 @@ userSchema.statics.login = async function (email, password) {
 }
 // This uses 'mongoose.model' which has been passed the schema through the variable 'userSchema' and the string 'User' to create a new model using the schema to create a collection called User.
 module.exports = mongoose.model('User', userSchema)
-

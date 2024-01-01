@@ -1,4 +1,3 @@
-//socket.js
 // This requires 'socket.io' then sets it as the value of the variable 'socketIO'.
 const socketIO = require('socket.io');
 // This requires 'cors' then sets it as the value of the variable 'cors'.

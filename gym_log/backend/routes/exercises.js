@@ -13,9 +13,11 @@ router.use(authorisation)
 // Exercise Routes
 // This defines the route handling GET requests to the root URL ('/') to fetch all exercises by executing the 'getExercises' function.
 router.get('/', getExercises)
-// This defines the route handling GET requests to the URL with an ID to fetch a single exercise by executing the 'getSingleExercise' function. 
-// ':id' is used which is a route parameter where the value of 'id' can change. 
-router.get('/:id', getSingleExercise)
+
+// // This defines the route handling GET requests to the URL with an ID to fetch a single exercise by executing the 'getSingleExercise' function. 
+// // ':id' is used which is a route parameter where the value of 'id' can change. 
+// router.get('/:id', getSingleExercise)
+
 // This defines the route handling POST requests to the root URL ('/') to post new exercises to the database by executing the 'createExercise' function.
 router.post('/', createExercise)
 // This defines the route handling DELETE requests to the URL with an ID to delete a single exercise by executing the 'deleteExercise' function. 
