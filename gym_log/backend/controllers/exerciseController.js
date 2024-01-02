@@ -10,8 +10,15 @@ const getExercises = async (req, res) => {
     try {
     // This initialises the variable 'user_id' and assigns it the value off the 'user_id' property stored in the request object.
     const user_id = req.user._id
+
     // Here the 'Exercise.find({user_id})' method is used to find all of the exercises that match the logged in users 'user_id'. The '.sort' method and '-1' is used to sort the results in descending order from creation. 
-    const exercises = await Exercise.find({user_id}).sort({createdAt: -1})
+    // THIS FUNCTION WAS REMOVED TO SATISFY THE ASSESSMENT BRIEF, THIS WOULD DISPLAY ONLY THE USERS EXERCISES, WHEN THE USER CREATES, DELETES OR UPDATES AN EXERCISE RECORD ONLY THAT USER CAN SEE THE RESULT.
+    // const exercises = await Exercise.find({user_id}).sort({createdAt: -1})
+    
+    // THIS FUNCTION REPLACED THE FUNCTION ABOVE SIMPLY REMOVING 'user_id' WHICH MEANS EVERY USER GETS TO SEE EVERY EXERCISE IN THE DATABASE. THIS MEANS AS A USER CREATES, DELETES OR UPDATES AN EXERCISE RECORD
+    // WEBSOCKETS ENABLE REAL TIME COMMUNICATION BETWEEN TO DIFFERENT LOGGED IN CLIENTS.
+    const exercises = await Exercise.find({}).sort({createdAt: -1})
+
     // Here the server responds with status code '200' and the value of the variable 'exercises' is returned as a JSON object.
     res.status(200).json(exercises)
     } catch (error) {
