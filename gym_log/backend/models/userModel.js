@@ -2,8 +2,9 @@
 const mongoose = require('mongoose')
 // This requires 'bcrypt' then sets it as the value of the variable 'bcrypt'.
 const bcrypt = require('bcrypt')
-// This requires 'validator' then sets it as the value of the variable 'validator'.
-const validator = require('validator')
+// This requires the functions 'checkEmptyFields', 'checkValidEmail', 'checkStrongPassword', 'checkEmailExists', 'checkEmptyEmailAndPassword', 'checkUserExists', 'comparePasswords', from the 'validationModel' file
+// then assigns each funtion to a variable of the same name.
+const {checkEmptyFields, checkValidEmail, checkStrongPassword, checkEmailExists, checkEmptyEmailAndPassword, checkUserExists, comparePasswords} = require('./validationModel');
 
 // This declares the variable 'Schema' and sets its value as the 'mongoose.Schema' constructor function.
 const Schema = mongoose.Schema
@@ -25,34 +26,16 @@ const userSchema = new Schema({
 })
 
 // This is the 'static' user signup method 
-userSchema.statics.signup = async function(userName, email, password) {
-    // Form validation
-    // Empty fields check
-    // This 'IF' statement checks if the 'userName', 'email' or 'password' fields are empty, if they are execute the code within the statement.
-    if (!userName || !email || !password) {
-        // This 'throws' an error which can be caught in a catch statement and halts execution of the code and produces a new error object with the message 'Please fill in all fields'.
-        throw Error('Please fill in all fields')
-    }
-    // Valid email check
-    // This 'IF' statement used the validator method '!validator.isEmail' to check if the email entered is NOT a valid email. If the email is NOT valid execute the code within the statement.
-    if (!validator.isEmail(email)) {
-        // This 'throws' an error which can be caught in a catch statement and halts execution of the code and produces a new error object with the message 'Please use a valid email'.
-        throw Error('Please use a valid email')
-    }
-    // Password strength check
-    // This 'IF' statement used the validator method '!validator.isStrongPassword' to check if the password entered is NOT a strong password. If the password is NOT strong enough execute the code within the statement.
-    if(!validator.isStrongPassword(password)) {
-        // This 'throws' an error which can be caught in a catch statement and halts execution of the code and produces a new error object with the message 'Please use a stronger password'.
-        throw Error('Please use a stronger password')
-    }
-    // Unique email check.
-    // Here the 'this' keyword is used in place of 'User' to refer to the User model as the User model is not accessable from inside the static method.
-    const emailExists = await this.findOne({email})
-    // This 'IF' statement checks to see if the variable 'emailExists' has a value if it does execute the code within the 'IF' statement.
-    if (emailExists) {
-        // This 'throws' an error which can be caught in a catch statement and halts execution of the code and produces a new error object with the message 'Email already registered'.
-        throw Error('Email already registered')
-    }
+userSchema.statics.signup = async function (userName, email, password) {
+    // This calls the function 'checkEmptyFields' which has been passed the variables 'userName', 'email' and 'password'.
+    checkEmptyFields(userName, email, password);
+    // This calls the function 'checkValidEmail' which has been passed the variable 'email'.
+    checkValidEmail(email);
+    // This calls the function 'checkStrongPassword' which has been passed the variable 'password'.
+    checkStrongPassword(password);
+    // This calls the function 'checkEmailExists' which has been passed the User model in 'this' and the variable 'email'.
+    await checkEmailExists.call(this, email);
+
     // Password hashing
     // Here 'bcrypt.genSalt' is used to generate a 'bcrypt salt' to generate a random string of characters which will be added to the end of a users password to add an additional layer of security. 
     // This salt is then assigned as the value of the variable 'bcryptSalt'.
@@ -68,36 +51,14 @@ userSchema.statics.signup = async function(userName, email, password) {
 
 // This is the 'static' user login method 
 userSchema.statics.login = async function (email, password) {
-    // Form validation
-    // Empty fields check
-    // This 'IF' statement checks if the 'email' or 'password' fields are empty, if they are execute the code within the statement.
-    if (!email || !password) {
-        // This 'throws' an error which can be caught in a catch statement and halts execution of the code and produces a new error object with the message 'Please fill in all fields'.
-        throw Error('Please fill in all fields')
-    }
-
-    // Does user exist check.
-    // Here the 'this' keyword is used in place of 'User' to refer to the User model as the User model is not accessable from inside the static method.
-    const user = await this.findOne({email})
-
-    // This 'IF' statement checks to see if the variable 'user' does NOT exist if it does NOT exist execute the code within the 'IF' statement.
-    if (!user) {
-        // This 'throws' an error which can be caught in a catch statement and halts execution of the code and produces a new error object with the message 'Incorrect email or password'.
-        throw Error('Invalid email or password')
-    }
-
-    // Here the 'bcrypt.compare' method is used to compare the entered 'password' with the hashed password 'user.password' stored in the 'user' object.
-    // If the passwords match the boolean value of true is assigned as the value of the variable 'passwordMatch'.  
-    const passwordMatch = await bcrypt.compare(password, user.password)
-
-    // If the passwords don't match, this block 'throws' an error with the message 'Invalid email or password'
-    // This 'IF' statement checks to see if the passwords DON'T match. If the passwords DON'T match execute the code within the 'IF' statement.
-    if (!passwordMatch) {
-        // This 'throws' an error which can be caught in a catch statement and halts execution of the code and produces a new error object with the message 'Incorrect email or password'.
-        throw Error('Invalid email or password')
-    }
+    // This calls the function 'checkEmptyEmailAndPassword' which has been passed the variables 'email' and 'password'.
+    checkEmptyEmailAndPassword(email, password);
+    // This calls the function 'checkUserExists' which has been passed the User model in 'this' and the variable 'email'.
+    const user = await checkUserExists.call(this, email);
+    // This calls the function 'comparePasswords' which has been passed the variables 'password' and 'password' property of the 'user' object.
+    await comparePasswords(password, user.password);
     // This returns the 'user' object.
-    return user
-}
+    return user;
+};
 // This uses 'mongoose.model' which has been passed the schema through the variable 'userSchema' and the string 'User' to create a new model using the schema to create a collection called User.
 module.exports = mongoose.model('User', userSchema)

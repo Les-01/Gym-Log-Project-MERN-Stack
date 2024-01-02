@@ -151,6 +151,5 @@ const updateExercise = async (req, res) => {
         res.status(500).json({ error: "An error occurred while updating the exercise" });
     }
 }
-
 // This exports the controller functional components 'getExercises', 'getSingleExercise', 'createExercise', 'deleteExercise' and 'updateExercise' enabling them to be imported elsewhere.
 module.exports = {getExercises, getSingleExercise, createExercise, deleteExercise, updateExercise}

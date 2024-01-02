@@ -33,4 +33,5 @@ const authorisation = async (req, res, next) => {
         res.status(401).json({error: 'Access denied. Request not authorised'})
     }
 }
+// This exports the controller functional components 'authorisation' enabling it to be imported elsewhere.
 module.exports = authorisation

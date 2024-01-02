@@ -37,8 +37,8 @@ app.use (cors({
 app.use(express.json())
 // Here app.use method is passed the objects 'req' and 'res' and the method 'next' to create middleware that executes with each request to the server.  
 app.use((req, res, next) => {
-    // Here 'console.log' is used to output the 'request path and the request method in the console for testing purposes.
-    console.log(req.path, req.method)
+    // // Here 'console.log' is used to output the 'request path and the request method in the console for testing purposes.
+    // console.log(req.path, req.method)
     // Here the method 'next' is used which was passed to the 'app.use' method, meaning for the code to execute past this method another 'next' must be included.
     next()
 })
