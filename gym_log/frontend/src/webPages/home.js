@@ -83,16 +83,15 @@ const Home = () => {
 
     return (
         <div className = "home">
+            {/* This renders the 'ExerciseEntryForm' component */}
+            <ExerciseEntryForm />
             <div className = "exercises">
                 {/* This is a conditional check, it ensures the variable 'exercises' has value and is valid before rendering */}
                 {exercises && exercises.map((exercise) => (
                     // This renders the ExerciseInfo components for each exercise in the 'exercises' array.
-                    <ExerciseInfo key = {exercise._id} exercise = {exercise}/>
-                    
+                    <ExerciseInfo key = {exercise._id} exercise = {exercise}/>                    
                 ))}
-            </div>
-            {/* This renders the 'ExerciseEntryForm' component */}
-            <ExerciseEntryForm />
+            </div>            
         </div>
     )    
 }

@@ -4,6 +4,8 @@
   --secondayColour: Black;
   --errorColour: red;
   --acceptColour: #2f55a4;
+  --inactive: #333;
+  --neonGlow: #0ef;
 }
 
 /*--------------------  Main Body CSS  --------------------*/
@@ -29,7 +31,7 @@ header .container {
 }
 
 header a {
-  color: var(--primaryColour);
+  color: var(--neonGlow);
   text-decoration: none;
 }
 
@@ -42,12 +44,22 @@ header a {
 
 .home {
   display: grid;
-  grid-template-columns: 3fr 1fr;
+  grid-template-columns: 1fr 3fr;
   gap: 100px;
 }
 
 .exercise_info {
   background-color: rgba(0, 0, 0, 0.75);
+  box-shadow: 0 0 10px #000;
+  border-radius: 4px;
+  margin: 20px auto;
+  padding: 20px;
+  position: relative;
+  box-shadow: 2px 2px 5px rgba(0,0,0,0,.5);
+  color: var(--primaryColour);  
+}
+
+.modal {
   box-shadow: 0 0 10px #000;
   border-radius: 4px;
   margin: 20px auto;
@@ -112,16 +124,20 @@ input {
   border-radius: 4px;
   box-sizing: border-box;
   color: var(--secondayColour);
+  transition: 1s;
 }
 
-form button, nav button {
-  background: var(--acceptColour);
+nav button {
+  background: var(--neonGlow);
+  box-shadow: 0 0 20px var(--neonGlow);
   border: 0;
-  color: var(--primaryColour);
+  color: var(--secondayColour);
   padding: 10px;
   font-family: Arial, Helvetica, sans-serif;
   border-radius: 4px;
   cursor: pointer;
+  font-weight: bold;
+  font-size: 1em;
 }
 
 /*--------------------  Error Response CSS  --------------------*/
@@ -158,14 +174,14 @@ input.error {
   display: inline-block;
   padding: 10px;
   margin: 10px;
-  background-color: var(--errorColour);
+  background-color: var(--inactive);
 }
 
 .modalSaveButton {
   display: inline-block;
   padding: 10px;
   margin: 10px;
-  background-color: var(--acceptColour);
+  background-color: var(--inactive);
 }
 
 /*--------------------  Nav Bar CSS  --------------------*/
@@ -194,3 +210,106 @@ form.signup, form.login {
   height: 400px;
   color: var(--primaryColour);
 }
+
+form button {
+  background: var(--inactive);
+  border: 0;
+  color: var(--primaryColour);
+  padding: 10px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  font-size: 1em;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+  transition: 1s;
+}
+
+/*--------------------  Hover Neon Glow CSS  --------------------*/
+
+form.signup:hover, form.login:hover {
+  border: 5px solid var(--neonGlow);
+  box-shadow: 0 0 10px var(--neonGlow), inset 0 0 10px var(--neonGlow);
+}
+
+form.signup:hover h2, form.login:hover h2 {
+  color: var(--neonGlow);
+}
+
+form.signup:hover label, form.login:hover label {
+  color: var(--neonGlow);
+}
+
+form.signup:hover input, form.login:hover input {
+  border: 4px solid var(--neonGlow);
+  box-shadow: 0 0 10px var(--neonGlow), inset 0 0 10px var(--neonGlow);
+}
+
+form.signup:hover button, form.login:hover button {
+  background: var(--neonGlow);
+  color: var(--secondayColour);
+  box-shadow: 0 0 20px var(--neonGlow);
+}
+
+.newEntry:hover {
+  border: 5px solid var(--neonGlow);
+  box-shadow: 0 0 10px var(--neonGlow), inset 0 0 10px var(--neonGlow);
+}
+
+.newEntry:hover h2 {
+  color: var(--neonGlow);
+}
+
+.newEntry:hover label {
+  color: var(--neonGlow);
+}
+
+.newEntry:hover input {
+  border: 4px solid var(--neonGlow);
+  box-shadow: 0 0 10px var(--neonGlow), inset 0 0 10px var(--neonGlow);
+}
+
+.newEntry:hover button {
+  background: var(--neonGlow);
+  color: var(--secondayColour);
+  box-shadow: 0 0 20px var(--neonGlow);
+}
+
+.exercise_info:hover {
+  border: 5px solid var(--neonGlow);
+  box-shadow: 0 0 10px var(--neonGlow), inset 0 0 10px var(--neonGlow);
+}
+
+.exercise_info:hover h4 {
+  color: var(--neonGlow);
+}
+
+.exercise_info:hover p {
+  color: var(--neonGlow);
+}
+
+.modal:hover {
+  border: 5px solid var(--neonGlow);
+  box-shadow: 0 0 10px var(--neonGlow), inset 0 0 10px var(--neonGlow);
+}
+
+.modal:hover:hover h2 {
+  color: var(--neonGlow);
+}
+
+.modal:hover:hover label {
+  color: var(--neonGlow);
+}
+
+.modalCancelButton:hover {
+  background: var(--errorColour);
+  color: var(--secondayColour);
+  box-shadow: 0 0 20px var(--errorColour);
+}
+
+.modalSaveButton:hover {
+  background: var(--neonGlow);
+  color: var(--secondayColour);
+  box-shadow: 0 0 20px var(--neonGlow);
+}
+
