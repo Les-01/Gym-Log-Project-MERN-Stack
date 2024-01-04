@@ -40,14 +40,15 @@ export const useSignup = () => {
             console.log(error)
         }
         // This 'IF' statement checks to see if the status of the variable response is 'OK', if it is OK execute the code within the statement.
-        if (response.ok) {
-            // Here the JavaScript object 'json' is converted into a string using 'JSON.stringify' and then stored it as an item named 'user' in the browser's localStorage.
-            localStorage.setItem('user', JSON.stringify(json))
-
-        // This updates the Authorisation Context and triggers the 'LOGIN' case.
-        dispatch({type: 'LOGIN', payload: json})
-        // This sets the value of 'setIsLoading' to 'false'.
-        setIsLoading(false)
+        if (response.ok) {   
+            // This adds the user's rank to the JSON object before storing it in local Storage
+            const user = { ...json, rank: json.rank };
+            // Here the JavaScript object 'user' is converted into a string using 'JSON.stringify' and then stored it as an item named 'user' in the browser's localStorage.
+            localStorage.setItem('user', JSON.stringify(user));
+            // This updates the Authorisation Context and triggers the 'LOGIN' case.
+            dispatch({ type: 'LOGIN', payload: user });
+            // This sets the value of 'setIsLoading' to 'false'.
+            setIsLoading(false);
         }
     }
     // This returns 'signup', 'isLoading' and 'error'.

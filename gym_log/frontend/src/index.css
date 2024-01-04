@@ -3,7 +3,6 @@
   --primaryColour: white;
   --secondayColour: Black;
   --errorColour: red;
-  --acceptColour: #2f55a4;
   --inactive: #333;
   --neonGlow: #0ef;
 }
@@ -158,15 +157,17 @@ input.error {
 .exercise_info .editButton {
   display: inline-block;
   margin-right: 80px; 
-  background-color: var(--acceptColour);
+  background-color: var(--inactive);
   color: var(--primaryColour);
+  font-weight: bold;
 }
 
 .exercise_info .deleteButton {
   display: inline-block;
   margin-right: 10px; 
-  background-color: var(--errorColour);
+  background-color: var(--inactive);
   color: var(--primaryColour);
+  font-weight: bold;
 }
 
 /*--------------------  Modal Cancel/Save Button CSS  --------------------*/
@@ -313,3 +314,14 @@ form.signup:hover button, form.login:hover button {
   box-shadow: 0 0 20px var(--neonGlow);
 }
 
+.exercise_info:hover .editButton {
+  background-color: var(--neonGlow);
+  box-shadow: 0 0 20px var(--neonGlow);
+  color: var(--secondayColour);
+}
+
+.exercise_info:hover .deleteButton {
+  background-color: var(--errorColour);
+  box-shadow: 0 0 20px var(--errorColour);
+  color: var(--secondayColour);
+}

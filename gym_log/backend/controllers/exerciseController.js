@@ -4,49 +4,55 @@ const Exercise = require('../models/exerciseModel')
 const mongoose = require('mongoose')
 // This requires the file 'socket' from the directory level above importing it, then sets it as the value of the variable 'socketIO' importing the socket instance.
 const socketIO = require('../socket'); 
+// This requires the file 'userModel' from the 'models' folder importing it, then sets it as the value of the variable 'User'.
+const User = require('../models/userModel')
 
 // This is the functional component 'getExercises'.
 const getExercises = async (req, res) => {
     try {
-    // This initialises the variable 'user_id' and assigns it the value off the 'user_id' property stored in the request object.
-    const user_id = req.user._id
+        // This initialises the variable 'user_id' and assigns it the value off the 'user_id' property stored in the request object.
+        const user_id = req.user._id;
 
-    // Here the 'Exercise.find({user_id})' method is used to find all of the exercises that match the logged in users 'user_id'. The '.sort' method and '-1' is used to sort the results in descending order from creation. 
-    // THIS FUNCTION WAS REMOVED TO SATISFY THE ASSESSMENT BRIEF, THIS WOULD DISPLAY ONLY THE USERS EXERCISES, WHEN THE USER CREATES, DELETES OR UPDATES AN EXERCISE RECORD ONLY THAT USER CAN SEE THE RESULT.
-    // const exercises = await Exercise.find({user_id}).sort({createdAt: -1})
-    
-    // THIS FUNCTION REPLACED THE FUNCTION ABOVE SIMPLY REMOVING 'user_id' WHICH MEANS EVERY USER GETS TO SEE EVERY EXERCISE IN THE DATABASE. THIS MEANS AS A USER CREATES, DELETES OR UPDATES AN EXERCISE RECORD
-    // WEBSOCKETS ENABLE REAL TIME COMMUNICATION BETWEEN TO DIFFERENT LOGGED IN CLIENTS.
-    const exercises = await Exercise.find({}).sort({createdAt: -1})
-
-    // Here the server responds with status code '200' and the value of the variable 'exercises' is returned as a JSON object.
-    res.status(200).json(exercises)
+        // This retrieves the users data from the database using the user_id.
+        const user = await User.findById(user_id);
+        // This declares the variable 'exercises'.
+        let exercises;
+        // Here an 'IF' statement is used where if the users 'rank' is admin execute the code within the if statement.
+        if (user && user.rank === 'admin') {
+            // Here the 'Exercise.find({})' method is used to find all of the exercises for the admin user. The '.sort' method and '-1' is used to sort the results in descending order from creation. 
+            exercises = await Exercise.find({}).sort({ createdAt: -1 });
+        } else {
+            // Here the 'Exercise.find({user_id})' method is used to find all of the exercises that match the non admin users 'user_id'. The '.sort' method and '-1' is used to sort the results in descending order from creation. 
+            exercises = await Exercise.find({ user_id }).sort({ createdAt: -1 });
+        }
+        // Here the server responds with status code '200' and the value of the variable 'exercises' is returned as a JSON object.
+        res.status(200).json(exercises);
     } catch (error) {
         // If an error occurs during the execution of the code within the try block, it will be caught here.
         console.error("Error in getExercises:", error);
-        res.status(500).json({ error: "An error occurred while fetching exercises" })
+        res.status(500).json({ error: "An error occurred while fetching exercises" });
     }
-}
+};
 
 // This is the functional component 'getSingleExercise'.
 const getSingleExercise = async (req, res) => {
     try {
-    // Here the variable 'id' is set to equal the value of the id of the request object.
-    const {id} = req.params
-    // This 'IF' statement declares that if the value of the variable 'id' is not a mongoos type of object id execute the code within the code block.
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-        // Here the server responds with status code '404' and a JSON object with an error property with a string value of "No exercise found".
-        return res.status(404).json({error: "No exercise found"})
-    }
-    // Here the 'Exercise.findById' method is used to find a specific exercise by its id. 
-    const exercise = await Exercise.findById(id)
-    // This 'IF' statement declares that if the variable 'exercise' does is not exist or has no value execute the code within the code block.
-    if(!exercise) {
-        // Here the server responds with status code '404' and a JSON object with an error property with a string value of "No exercise found".
-        return res.status(404).json({error: "No exercise found"})
-    }
-    // Here the server responds with status code '200' and the value of the variable 'exercise' is returned as a JSON object.
-    res.status(200).json(exercise)
+        // Here the variable 'id' is set to equal the value of the id of the request object.
+        const {id} = req.params
+        // This 'IF' statement declares that if the value of the variable 'id' is not a mongoos type of object id execute the code within the code block.
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            // Here the server responds with status code '404' and a JSON object with an error property with a string value of "No exercise found".
+            return res.status(404).json({error: "No exercise found"})
+        }
+        // Here the 'Exercise.findById' method is used to find a specific exercise by its id. 
+        const exercise = await Exercise.findById(id)
+        // This 'IF' statement declares that if the variable 'exercise' does is not exist or has no value execute the code within the code block.
+        if(!exercise) {
+            // Here the server responds with status code '404' and a JSON object with an error property with a string value of "No exercise found".
+            return res.status(404).json({error: "No exercise found"})
+        }
+        // Here the server responds with status code '200' and the value of the variable 'exercise' is returned as a JSON object.
+        res.status(200).json(exercise)
     } catch (error) {
         // If an error occurs during the execution of the code within the try block, it will be caught here.
         console.error("Error in getSingleExercise:", error);
@@ -82,8 +88,12 @@ const createExercise = async (req, res) => {
     try {
         // This initialises the variable 'user_id' and assigns it the value off the 'user_id' property stored in the request object.
         const user_id = req.user._id
-        // Here the 'Exercise.create' method is used and passed the variables 'exerciseName', 'reps', 'weight' and 'user_id' to add the values to the database. 
-        const exercise = await Exercise.create({exerciseName, reps, weight, user_id})
+        // This retrieves the users data from the database using the user_id.
+        const userInfo = await User.findById(user_id);
+        // This retrieves the users email from the 'userInfo' object and assigns it as the value of the variable 'email'
+        const email = userInfo.email
+        // Here the 'Exercise.create' method is used and passed the variables 'exerciseName', 'reps', 'weight', 'user_id' and 'email' to add the values to the database. 
+        const exercise = await Exercise.create({exerciseName, reps, weight, user_id, email})
         // This calls the 'getIO' method from the socketIO module, which returns the Socket.IO instance and then applies the 'emit' method to that instance which sends the 'exerciseCreated' event to the server 
         // along with the 'exercise' object containing the data on the exercise entry to be created. 
         socketIO.getIO().emit('exerciseCreated', exercise);

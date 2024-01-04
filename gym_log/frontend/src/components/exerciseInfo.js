@@ -7,6 +7,12 @@ import { useAuthorisationContext } from '../hooks/useAuthorisationContext'
 const ExerciseInfo = ({exercise}) => {
     // This initialises the object 'user' and assigns 'useAuthorisationContext' as its value.  
     const {user} = useAuthorisationContext()
+    // This retrieves the 'user' object stored in local storage and assigns it as the value of the variable 'userObject'.
+    const userObject = JSON.parse(localStorage.getItem('user'));
+    // This is a conditioonal statement wherein if the 'userObject' has value and the 'userObject' 'rank' property equals 'admin'.
+    const isAdmin = userObject && userObject.rank === 'admin';
+
+
     // This initializes the variable 'showModal' and the function 'setShowModal' which are set to equal the React hook 'useState' which has an initial value of 'false'.
     // When the 'setShowModal' function is called and passed a value of either 'true' or 'false' that value will be assigned as the new value of the variable 'showModal'.
     const [showModal, setShowModal] = useState(false);
@@ -102,6 +108,10 @@ const ExerciseInfo = ({exercise}) => {
     // When 'ExerciseInfo' is called it returns the code within the parenthesis.
      return (        
         <div className="exercise_info">
+            {/* Conditionally render email for admin */}
+            {isAdmin && exercise.email && (
+            <p><strong>Email: </strong>{exercise.email}</p>
+        )}
             {/* This outputs the 'exerciseName' property of the 'exercise' object as a 'H4' heading*/} 
             <h4>{exercise.exerciseName}</h4>
             {/* This outputs the 'weight' property of the 'exercise' object */} 

@@ -23,8 +23,12 @@ const userLogin = async (req, res) => {
         // Here the 'generateJSONWebToken' function is called and passed the ID of the user logging in to generate a JSON webtoken that contains the users unique ID. The resulting token is assigned as the value 
         // of the variable 'token'.
         const token = generateJSONWebToken(user._id)
+        // This sends the users rank back in the response object.
+        const rank = user.rank
+        // This sends the users username back in the response object.
+        const userName = user.userName        
         // If the user login was successful set the response status to 200 and send a json object response with the 'userName', 'email' and the JSON web token 'token'.
-        res.status(200).json({email, token})
+        res.status(200).json({userName, email, rank, token})
     } catch (error) {
         // If the user sign up was unsuccessful set the response status to 400 and send a json object response with the 'error.message'.
         res.status(400).json({error: error.message})
@@ -41,8 +45,10 @@ const userSignup = async (req, res) => {
         // Here the 'generateJSONWebToken' function is called and passed the ID of the user signing up to generate a JSON webtoken that contains the users unique ID. The resulting token is assigned as the value 
         // of the variable 'token'.
         const token = generateJSONWebToken(user._id)
+        // This sends the users rank back in the response object.
+        const rank = user.rank
         // If the user sign up was successful set the response status to 200 and send a json object response with the 'userName', 'email' and the JSON web token 'token'.
-        res.status(200).json({userName, email, token})
+        res.status(200).json({userName, email, rank, token})
     } catch (error) {
         // If the user sign up was unsuccessful set the response status to 400 and send a json object response with the 'error.message'.
         res.status(400).json({error: error.message})

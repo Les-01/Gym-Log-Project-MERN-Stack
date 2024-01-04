@@ -23,6 +23,10 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
+    rank: {
+        type: String,
+        default: 'user'
+    }
 })
 
 // This is the 'static' user signup method 

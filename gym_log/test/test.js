@@ -19,10 +19,11 @@ const createExercisePayload = {
   exerciseName: "Create Exercise Test",
   reps: 10,
   weight: 10,
-  user_id: "6592ece55c60bbca3b791ca1" 
+  user_id: "6592ece55c60bbca3b791ca1",
+  email: "charlie@chaplin.com"
 };
 // This is the object ID of the object in the database to be deleted in the delete exercise test.
-const deleteExerciseId = "65943c31128465a64eabf36e"
+const deleteExerciseId = "6596f0fdbb2cddae4b3fc967"
 // This is the object ID of the object in the database to be updated in the update exercise test.
 const updateExerciseId = "65930bb240fda0396a986398"
 // This is the payload for the update exercise test.
@@ -36,8 +37,10 @@ const updateExercisePayload = {
 const signupUserPayload = {
   userName: "Test User Signup",
   email: "testuser@signup.com",
-  password: "TestUserSignup01!" 
+  password: "TestUserSignup01!",
+  rank: "user" 
 };
+
 // This is the payload for the login user test.
 const loginUserPayload = {
   email: "testuser@login.com",
@@ -169,7 +172,7 @@ suite("Unit tests for signup form validation", function() {
     }
   });
   // Signup Form 'checkEmptyFields' function All Fields Filled In Test
-  test("checkEmptyFields should not throw an error for non-empty 'User Name', 'Email' and 'Password", function() {
+  test("'checkEmptyFields' should not throw an error for non-empty 'User Name', 'Email' and 'Password", function() {
     try {
       checkEmptyFields("Alan", "alan@alderson.com", "AlanAlderson01!");
     } catch (error) {
