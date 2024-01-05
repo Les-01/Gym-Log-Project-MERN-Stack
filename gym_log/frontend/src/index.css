@@ -32,11 +32,12 @@ header .container {
 header a {
   color: var(--neonGlow);
   text-decoration: none;
+  padding: 0px 10px;
 }
 
 /*--------------------  Class Specific CSS  --------------------*/
 .sitePages {
-  max-width: 1450px;
+  max-width: 1500px;
   padding:22px;
   margin: 0 auto;
 }
@@ -44,10 +45,10 @@ header a {
 .home {
   display: grid;
   grid-template-columns: 1fr 3fr;
-  gap: 100px;
+  gap: 120px;
 }
 
-.exercise_info {
+.exercise_info, .user_info {
   background-color: rgba(0, 0, 0, 0.75);
   box-shadow: 0 0 10px #000;
   border-radius: 4px;
@@ -72,19 +73,19 @@ h2 {
   color: var(--primaryColour);
 }
 
-.exercise_info h4 {
-  margin: 0 0 10px 0;
-  font-size: 1.2em;
+.exercise_info h4, .user_info h4 {
+  margin: 0 0 5px 0;
+  font-size: 1.1em;
   color: var(--primaryColour);  
 }
 
-.exercise_info p {
+.exercise_info p, .user_info p {
   margin: 0;
   font-size: 1em;
   color: var(--primaryColour);  
 }
 
-.exercise_info span {
+.exercise_info span, .user_info span {
   position: absolute;
   top: 20px;
   right: 20px;
@@ -154,7 +155,7 @@ input.error {
 }
 
 /*--------------------  Edit/Delete Button CSS  --------------------*/
-.exercise_info .editButton {
+.exercise_info .editButton, .user_info .editButton {
   display: inline-block;
   margin-right: 80px; 
   background-color: var(--inactive);
@@ -162,7 +163,7 @@ input.error {
   font-weight: bold;
 }
 
-.exercise_info .deleteButton {
+.exercise_info .deleteButton, .user_info .deleteButton {
   display: inline-block;
   margin-right: 10px; 
   background-color: var(--inactive);
@@ -276,16 +277,16 @@ form.signup:hover button, form.login:hover button {
   box-shadow: 0 0 20px var(--neonGlow);
 }
 
-.exercise_info:hover {
+.exercise_info:hover, .user_info:hover {
   border: 5px solid var(--neonGlow);
   box-shadow: 0 0 10px var(--neonGlow), inset 0 0 10px var(--neonGlow);
 }
 
-.exercise_info:hover h4 {
+.exercise_info:hover h4, .user_info:hover h4 {
   color: var(--neonGlow);
 }
 
-.exercise_info:hover p {
+.exercise_info:hover p, .user_info:hover p {
   color: var(--neonGlow);
 }
 
@@ -314,13 +315,13 @@ form.signup:hover button, form.login:hover button {
   box-shadow: 0 0 20px var(--neonGlow);
 }
 
-.exercise_info:hover .editButton {
+.exercise_info:hover .editButton, .user_info:hover .editButton {
   background-color: var(--neonGlow);
   box-shadow: 0 0 20px var(--neonGlow);
   color: var(--secondayColour);
 }
 
-.exercise_info:hover .deleteButton {
+.exercise_info:hover .deleteButton, .user_info:hover .deleteButton{
   background-color: var(--errorColour);
   box-shadow: 0 0 20px var(--errorColour);
   color: var(--secondayColour);

@@ -110,8 +110,7 @@ const ExerciseInfo = ({exercise}) => {
         <div className="exercise_info">
             {/* Conditionally render email for admin */}
             {isAdmin && exercise.email && (
-            <p><strong>Email: </strong>{exercise.email}</p>
-        )}
+            <h4><strong>Email: </strong>{exercise.email}</h4>        )}
             {/* This outputs the 'exerciseName' property of the 'exercise' object as a 'H4' heading*/} 
             <h4>{exercise.exerciseName}</h4>
             {/* This outputs the 'weight' property of the 'exercise' object */} 

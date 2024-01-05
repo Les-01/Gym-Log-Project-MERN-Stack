@@ -8,7 +8,7 @@ export const useLogout = () => {
         // This removes the JSON wen token saved in local storage removing the users authorised login status. 
         localStorage.removeItem('user')
         // This updates the Authorisation Context and triggers the 'LOGOUT' case.
-        dispatch({type: 'LOGOUT'})
+        dispatch({type: 'LOGOUT'})        
     }
     return {logout}
 }

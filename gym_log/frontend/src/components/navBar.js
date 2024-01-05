@@ -16,7 +16,6 @@ const NavBar = () => {
     const logoutBtnHandler = () => {
         // This is the 'logout' function.
         logout()
-
     }
     // When 'NavBar' is called it returns the code within the parenthesis.
     return (
@@ -28,6 +27,10 @@ const NavBar = () => {
                     <h1>Gym Log</h1>
                 </Link>
                 <nav>
+                    {/* Display "Admin" link only if the user is logged in and their rank is "admin" */}
+                    {user && user.rank === 'admin' && (
+                        <Link to="/admin">Admin</Link>
+                    )}
                     {/* This is a conditional check, it checks if the variable 'user' has a value if it does render the content within the statement */}
                     {user && (
                         <div>
@@ -35,7 +38,7 @@ const NavBar = () => {
                         {/* Logout button triggering the 'logoutBtnHandler' function */}
                             <button onClick = {logoutBtnHandler}>Logout</button>
                         </div>
-                    )}
+                    )}                    
                     {/* This is a conditional check, it checks if the variable 'user' does NOT have a value if it does NOT render the content within the statement */}
                     {!user && (
                         <div>

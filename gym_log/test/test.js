@@ -23,9 +23,13 @@ const createExercisePayload = {
   email: "charlie@chaplin.com"
 };
 // This is the object ID of the object in the database to be deleted in the delete exercise test.
-const deleteExerciseId = "6596f0fdbb2cddae4b3fc967"
+const deleteExerciseId = "6597f993e9ff47a8e4425828"
 // This is the object ID of the object in the database to be updated in the update exercise test.
 const updateExerciseId = "65930bb240fda0396a986398"
+// This is the object ID of the object in the database to be updated in the ADMIN update user test.
+const updateUserId = "6597fc3b63a9772625e348fa"
+// This is the object ID of the object in the database to be deleted in the ADMIN delete user test.
+const deleteUserId = "6597fc2663a9772625e348f1"
 // This is the payload for the update exercise test.
 const updateExercisePayload = {
   exerciseName: "Update Exercise Test",
@@ -33,6 +37,14 @@ const updateExercisePayload = {
   weight: 10,
   user_id: "6592ece55c60bbca3b791ca1" 
 };
+
+const updateUserPayload = {
+  userName: "Test Admin Update User",
+  email: "testadminuser@update.com",
+  password: "TestAdminUserUpdate01!",
+  rank: "user" 
+};
+
 // This is the payload for the create new user test.
 const signupUserPayload = {
   userName: "Test User Signup",
@@ -138,6 +150,55 @@ suite("Integration tests for user routes (CREATE, LOGIN AND AUTHENTICATE)", func
       .end(function(error, response) {
         chai.assert.equal(response.status, 200, "Wrong status code");
         chai.expect(response.body).to.have.property('email').equal(loginUserPayload.email);
+        done();
+      });
+  });
+});
+
+// --------------------  Integration Test ADMIN Database User account Read, Update and Delete Tests  -------------------- //
+// This is the integration testing suite for the admin user routes.
+suite("Integration tests for ADMIN user routes (READ, UPDATE, DELETE)", function() {  
+  // C.R.U.D ADMIN Retrieve Users Test
+  test("ADMIN READ Users Test (GET /api/user/admin)", function(done) {
+    chai.request(app)
+      .get("/api/user/admin")
+      .set('Authorization', jwtAuthorisationToken)
+      .end(function(error, response) {
+        chai.assert.equal(response.status, 200, "Wrong status code");
+        chai.expect(response.body).to.be.an("array");
+        chai.expect(response.body).to.have.length.above(0);
+        // Example assertions for the GET request
+        chai.expect(response.body[0]).to.have.property('userName').that.is.a('string');
+        done();
+      });
+  });
+
+  // C.R.U.D ADMIN Update User Test
+  test("ADMIN UPDATE User Test (PATCH /api/user/admin/:id)", function(done) {
+    const userIdToUpdate = updateUserId;
+    chai.request(app)
+      .patch(`/api/user/admin/${userIdToUpdate}`)
+      .set('Authorization', jwtAuthorisationToken)
+      .send(updateUserPayload)
+      .end(function(error, response) {
+        chai.assert.equal(response.status, 200, "Wrong status code");
+        chai.expect(response.body).to.have.property('userName').equal(updateUserPayload.userName);
+        chai.expect(response.body).to.have.property('email').equal(updateUserPayload.email);
+        chai.expect(response.body).to.have.property('password').equal(updateUserPayload.password);
+        chai.expect(response.body).to.have.property('rank').equal(updateUserPayload.rank);
+        done(); 
+      });
+  }); 
+
+  // C.R.U.D Delete User Test
+  test("ADMIN DELETE User Test (DELETE /api/user/admin/:id)", function(done) {
+    const userIdToDelete = deleteUserId;
+    chai.request(app)
+      .delete(`/api/user/admin/${userIdToDelete}`)
+      .set('Authorization', jwtAuthorisationToken)
+      .end(function(error, response) {
+        chai.assert.equal(response.status, 200, "Wrong status code");
+        chai.expect(response.body).to.have.property('_id').equal(deleteUserId);
         done();
       });
   });

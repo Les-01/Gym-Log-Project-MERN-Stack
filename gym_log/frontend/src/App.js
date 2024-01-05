@@ -5,6 +5,8 @@ import { useAuthorisationContext } from './hooks/useAuthorisationContext'
 // This imports the variable 'Home' from the file 'home' in the 'webPages' folder.
 import Home from './webPages/home'
 // This imports the variable 'Home' from the file 'home' in the 'webPages' folder.
+import Admin from './webPages/admin'
+// This imports the variable 'Home' from the file 'home' in the 'webPages' folder.
 import Signup from './webPages/signup'
 // This imports the variable 'Home' from the file 'home' in the 'webPages' folder.
 import Login from './webPages/login'
@@ -30,6 +32,12 @@ function App() {
             <Route
               path="/"              
               element = {user ? <Home /> : <Navigate to ="/login" />}
+            />
+            {/* This is a 'Route' component which defines the specific route to the admin component.*/}
+            {/* A ternary operator is used which enables access to the 'Home' component if the user is logged in otherwise the user is redirected to the 'Login' component.*/}
+            <Route
+              path="/admin"              
+              element = {<Admin />}
             />
             {/* This is a 'Route' component which defines the specific route to the Signup component.*/}
             {/* A ternary operator is used which enables access to the 'Signup' component if the user is NOT logged in otherwise the user is redirected to the 'Home' component.*/}
