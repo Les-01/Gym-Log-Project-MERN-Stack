@@ -9,7 +9,7 @@
     "sinon": "^17.0.1"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "mocha ./test/test.js"
   },
   "mocha": {
     "ui": "tdd"
