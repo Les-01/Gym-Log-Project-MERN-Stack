@@ -22,7 +22,8 @@ jobs:
           node-version: '18'  
 
       - name: Install dependencies
-        run: npm install mocha chai@4.3.10 chai-http bcrypt sinon
+        run: npm install 
+        # mocha chai@4.3.10 chai-http bcrypt sinon
         
       - name: tests
         run: npm test  
