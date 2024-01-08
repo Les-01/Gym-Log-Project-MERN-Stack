@@ -25,7 +25,10 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Install dependencies
+      - name: Clear old dependencies
+        run: rm -rf node_modules
+
+      - name: Install dependencies and rebuild bcrypt
         run: |
           npm install
           npm rebuild bcrypt --build-from-source
