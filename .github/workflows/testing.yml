@@ -10,9 +10,7 @@ on:
       
 jobs:
   test:
-    # runs-on: ubuntu-latest
     runs-on: windows-latest
-
 
     strategy:
       matrix:
@@ -28,7 +26,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: Clear old dependencies
-        run: rm -rf node_modules
+        run: Remove-Item -Path node_modules -Recurse -Force -ErrorAction SilentlyContinue
 
       - name: Install dependencies and rebuild bcrypt
         run: |
