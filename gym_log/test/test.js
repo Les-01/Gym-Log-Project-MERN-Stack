@@ -29,7 +29,7 @@ const updateExerciseId = "65930bb240fda0396a986398"
 // This is the object ID of the object in the database to be updated in the ADMIN update user test.
 const updateUserId = "6597fc3b63a9772625e348fa"
 // This is the object ID of the object in the database to be deleted in the ADMIN delete user test.
-const deleteUserId = "65974b13a5d3123e3b2315d3"
+const deleteUserId = "659bf49c493a419d4ab2170a"
 // This is the payload for the update exercise test.
 const updateExercisePayload = {
   exerciseName: "Update Exercise Test",
