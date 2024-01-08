@@ -21,13 +21,13 @@ const createExercisePayload = {
   email: "charlie@chaplin.com"
 };
 // This is the object ID of the object in the database to be deleted in the delete exercise test.
-const deleteExerciseId = "659bf0bc03bc1b5f1a37f1d2"
+const deleteExerciseId = "659bf9f2eeac742f4e483418"
 // This is the object ID of the object in the database to be updated in the update exercise test.
 const updateExerciseId = "65930bb240fda0396a986398"
 // This is the object ID of the object in the database to be updated in the ADMIN update user test.
 const updateUserId = "6597fc3b63a9772625e348fa"
 // This is the object ID of the object in the database to be deleted in the ADMIN delete user test.
-const deleteUserId = "659bf49c493a419d4ab2170a"
+const deleteUserId = "659bf99919da4c5d67077439"
 // This is the payload for the update exercise test.
 const updateExercisePayload = {
   exerciseName: "Update Exercise Test",
@@ -61,6 +61,37 @@ const loginUserPayload = {
 
 // This is the integration testing suite for the exercise routes.
 suite("Integration tests for exercise routes (CREATE, READ, UPDATE, DELETE)", function() {  
+  // C.R.U.D Create Exercise Test
+  test("CREATE Exercise Test Is Run Twice As The First Test In The Git Test Suite Always Fails!? (POST /api/exercises)", function(done) {
+    chai.request(app)
+      .post("/api/exercises")
+      .set('Authorization', jwtAuthorisationToken)
+      .send(createExercisePayload)
+      .end(function(error, response) {
+        chai.assert.equal(response.status, 200, "Wrong status code");
+        chai.expect(response.body).to.have.property('exerciseName').equal(createExercisePayload.exerciseName);
+        chai.expect(response.body).to.have.property('reps').equal(createExercisePayload.reps);
+        chai.expect(response.body).to.have.property('weight').equal(createExercisePayload.weight);
+        chai.expect(response.body).to.have.property('user_id').equal(createExercisePayload.user_id);
+        done();
+      });
+  });
+  // C.R.U.D Create Exercise Test
+  test("CREATE Exercise Test (POST /api/exercises)", function(done) {
+    chai.request(app)
+      .post("/api/exercises")
+      .set('Authorization', jwtAuthorisationToken)
+      .send(createExercisePayload)
+      .end(function(error, response) {
+        chai.assert.equal(response.status, 200, "Wrong status code");
+        chai.expect(response.body).to.have.property('exerciseName').equal(createExercisePayload.exerciseName);
+        chai.expect(response.body).to.have.property('reps').equal(createExercisePayload.reps);
+        chai.expect(response.body).to.have.property('weight').equal(createExercisePayload.weight);
+        chai.expect(response.body).to.have.property('user_id').equal(createExercisePayload.user_id);
+        done();
+      });
+  });
+
   // C.R.U.D Retrieve Exercises Test
   test("READ Exercises Test (GET /api/exercises)", function(done) {
     chai.request(app)
