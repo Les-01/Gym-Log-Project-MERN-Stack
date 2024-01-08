@@ -30,8 +30,8 @@ module.exports = {
             // This creates the error message 'Socket.IO not initialised!'.
             throw new Error('Socket.IO not initialised!');
         }
-        // This logs to the console 'Socket.IO not initialised!'.
-        // console.log('Socket.IO initialised')
+        // This logs to the console 'Socket.IO initialised!'.
+        console.log('Socket.IO initialised')
         // This returns the initialised 'Socket.IO' instance back once the 'getIO' function is called.
         return io;
     }

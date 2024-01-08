@@ -23,13 +23,13 @@ const createExercisePayload = {
   email: "charlie@chaplin.com"
 };
 // This is the object ID of the object in the database to be deleted in the delete exercise test.
-const deleteExerciseId = "6597f993e9ff47a8e4425828"
+const deleteExerciseId = "659810cbd17dfb34f088cbe6"
 // This is the object ID of the object in the database to be updated in the update exercise test.
 const updateExerciseId = "65930bb240fda0396a986398"
 // This is the object ID of the object in the database to be updated in the ADMIN update user test.
 const updateUserId = "6597fc3b63a9772625e348fa"
 // This is the object ID of the object in the database to be deleted in the ADMIN delete user test.
-const deleteUserId = "6597fc2663a9772625e348f1"
+const deleteUserId = "65974b13a5d3123e3b2315d3"
 // This is the payload for the update exercise test.
 const updateExercisePayload = {
   exerciseName: "Update Exercise Test",
