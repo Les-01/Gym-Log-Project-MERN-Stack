@@ -26,4 +26,4 @@ jobs:
         # mocha chai@4.3.10 chai-http bcrypt sinon
         
       - name: tests
-        run: npm test  
+        run: npm run test  
