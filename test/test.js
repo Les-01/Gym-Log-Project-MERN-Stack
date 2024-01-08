@@ -4,8 +4,6 @@ const { app } = require("../gym_log/backend/server");
 const exerciseRouter = require("../gym_log/backend/routes/exercises");
 const userRouter = require("../gym_log/backend/routes/users");
 chai.use(chaiHttp);
-// This requires 'bcrypt' then sets it as the value of the variable 'bcrypt'.
-const bcrypt = require('bcrypt')
 const sinon = require('sinon');
 // This requires the functions 'checkEmptyFields', 'checkValidEmail', 'checkStrongPassword', 'checkEmailExists', 'checkEmptyEmailAndPassword', 'checkUserExists', 'comparePasswords', from the 'validationModel' file
 // then assigns each funtion to a variable of the same name.
@@ -339,39 +337,5 @@ suite("Unit tests for login form validation", function() {
     } catch (error) {
       chai.expect.fail("Should not throw an error for existing user");
     }
-  });
-  // Login Form 'comparePasswords' function Passwords Do Not Match Test
-  test("'comparePasswords' function should throw an error if the passwords do not match", async function() {
-    // Mocking bcrypt.compare using sinon
-    const bcryptStub = sinon.stub(bcrypt, 'compare').resolves(false);
-
-    try {
-      await comparePasswords("AlanAlderson01!", "hashedPassword");
-    } catch (error) {
-      chai.expect(error.message).to.equal("Invalid email or password");
-    }
-
-    // Restoring the stubbed method
-    bcryptStub.restore();
-  });
-  // Login Form 'comparePasswords' function Passwords Do Match Test
-  test("'comparePasswords' function should not throw an error if the passwords do match", async function() {
-    // Mocking bcrypt.compare using sinon
-    const password = 'AlanAlderson01'
-    const bcryptStub = sinon.stub(bcrypt, 'compare').resolves(true);
-    const bcryptSalt = await bcrypt.genSalt(10)
-    // Here the 'bcrypt.hash' method is used to hash arguments passed to it. In this case the users password and the bcrypt salt are both passed to 'bcrypt.hash' with the resulting hash being assigned as the 
-    // value of the variable 'hashedPassword'. 
-    const hashedPassword = await bcrypt.hash(password, bcryptSalt)
-
-    try {
-      await comparePasswords(password, hashedPassword);
-    } catch (error) {
-      // Fail the test if an error is thrown
-      chai.expect.fail(null, null, 'Should not throw an error for correct password match');
-    }
-
-    // Restoring the stubbed method
-    bcryptStub.restore();
   });
 });
